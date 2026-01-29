@@ -1,3 +1,3 @@
-export const PORT = 3001;
+export const PORT = 3000;
 
 export const dbName = "urlShortner";
