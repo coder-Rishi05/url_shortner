@@ -1,11 +1,12 @@
-import "dotenv/config";  
+import "dotenv/config";
 
 import { app } from "../app.js";
-import { PORT } from "./utils/constant.js";
+import { const_PORT } from "./utils/constant.js";
 import connectDb from "./db/db.js";
-import { env_PORT } from "./utils/env.js";
+import { PORT } from "./utils/env.js";
 
-
+import dotenv from "dotenv";
+dotenv.config();
 
 const startServer = async (req, res) => {
   try {
@@ -15,8 +16,8 @@ const startServer = async (req, res) => {
       console.log("Error", err);
       throw err;
     });
-    app.listen(env_PORT || PORT, () => {
-      console.log(`server is running at : ${env_PORT || PORT}`);
+    app.listen(PORT || PORT, () => {
+      console.log(`server is running at : ${PORT || const_PORT}`);
     });
   } catch (error) {
     console.log("mongodb connection failed");
