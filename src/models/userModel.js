@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import validator from "validator"
 
 const userSchema = new Schema(
   {
@@ -18,11 +19,21 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true,
       index: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Invalid Email address" + value);
+        }
+      },
     },
     password: {
       type: String,
       required: true,
       select: false,
+      validate(value) {
+        if (!validator.isStrongPassword(value)) {
+          throw new Error("Password is not strong enough" + value);
+        }
+      },
     },
     role: {
       type: String,

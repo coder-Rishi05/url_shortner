@@ -1,8 +1,10 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import validationSignUpData from "../utils/validator.js";
 
 export const signUp = async (req, res) => {
   try {
+    validationSignUpData(req);
     const { firstname, email, password } = req.body;
 
     if (!firstname || !email || !password) {
