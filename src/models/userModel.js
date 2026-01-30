@@ -29,11 +29,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
       select: false,
-      validate(value) {
-        if (!validator.isStrongPassword(value)) {
-          throw new Error("Password is not strong enough" + value);
-        }
-      },
     },
     role: {
       type: String,

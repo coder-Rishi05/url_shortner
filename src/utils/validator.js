@@ -1,17 +1,40 @@
 import validator from "validator";
 
-const validationSignUpData = (req) => {
-  const { firstname,  email, password } = req.body;
+export const validationSignUpData = (req) => {
+  const { firstname, email, password } = req.body;
 
-  if (!firstname ) {
-    throw new Error("first  name is required ");
-  } else if (!validator.isEmail(email)) {
-    throw new Error("the email is not correct ! Please Enter a valid Email");
-  } else if (!validator.isStrongPassword(password)) {
+  if (!firstname) {
+    throw new Error("First name is required");
+  }
+
+  if (!email || !validator.isEmail(email)) {
+    throw new Error("Please enter a valid email address");
+  }
+
+  if (
+    !password ||
+    !validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+  ) {
     throw new Error(
-      "the password is not valid ! Please Enter a valid strong password",
+      "Password must be strong (8+ chars, uppercase, lowercase, number, symbol)",
     );
   }
 };
 
-export default validationSignUpData;
+export const validationLoginData = (req) => {
+  const { email, password } = req.body;
+
+  if (!email || !validator.isEmail(email)) {
+    throw new Error("Please enter a valid email address");
+  }
+
+  if (!password) {
+    throw new Error("Password is required");
+  }
+};
