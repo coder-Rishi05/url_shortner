@@ -6,19 +6,19 @@ This project is a **backend-first URL Shortener** built with a clean, scalable a
 
 This repository is being developed **iteratively**:
 
-* **V1**: Core auth + DB foundation (current)
-* **V2**: URL shortener core logic
-* **V3**: Analytics, rate limiting, expiry, scaling concepts
+- **V1**: Core auth + DB foundation (current)
+- **V2**: URL shortener core logic
+- **V3**: Analytics, rate limiting, expiry, scaling concepts
 
 ---
 
 ## 🎯 Current Stage (What exists right now)
 
-* Environment configuration using `dotenv`
-* MongoDB connection via Mongoose
-* Auth-first data modeling
-* User schema designed with security & scalability in mind
-* Clear separation of concerns (models, routes, controllers)
+- Environment configuration using `dotenv`
+- MongoDB connection via Mongoose
+- Auth-first data modeling
+- User schema designed with security & scalability in mind
+- Clear separation of concerns (models, routes, controllers)
 
 ---
 
@@ -43,70 +43,44 @@ Business Logic (URL logic – upcoming)
 ## 🗂️ Folder Structure (Current)
 
 ```text
-src/
-│
-├─ models/
-│   └─ user.model.js
-│
-├─ routes/
-│   ├─ auth.routes.js   (planned)
-│   └─ url.routes.js    (planned)
-│
-├─ controllers/
-│   ├─ auth.controller.js (planned)
-│   └─ url.controller.js  (planned)
-│
-├─ middleware/
-│   └─ auth.middleware.js (planned)
-│
-├─ app.js
-└─ server.js
+
+├── 📁 src
+│ ├── 📁 controllers
+│ │ └── 📄 auth.controller.js
+│ ├── 📁 db
+│ │ └── 📄 db.js
+│ ├── 📁 middlewares
+│ ├── 📁 models
+│ │ └── 📄 userModel.js
+│ ├── 📁 routes
+│ │ ├── 📄 auth.routes.js
+│ │ └── 📄 url.routes.js
+│ ├── 📁 utils
+│ │ ├── 📄 constant.js
+│ │ ├── 📄 env.js
+│ │ └── 📄 validator.js
+│ ├── 📁 validators
+│ │ └── 📄 auth.validator.js
+│ └── 📄 server.js
+├── ⚙️ .gitignore
+├── 📄 app.js
+├── ⚙️ package-lock.json
+├── ⚙️ package.json
+└── 📝 readme.md
+
+
+
 ```
 
 ---
 
 ## 🔐 Authentication Strategy (Planned)
 
-* **Signup** → create user with hashed password
-* **Login** → verify credentials + issue JWT
-* **Protected Routes** → JWT-based middleware
-* **Authorization** → role-based (`user`, `admin`)
+- **Signup** → create user with hashed password
+- **Login** → verify credentials + issue JWT
+- **Protected Routes** → JWT-based middleware
+- **Authorization** → role-based (`user`, `admin`)
 
 JWT is **stateless**, so no tokens are stored in the database.
 
 ---
-
-## 📦 Database Models (Current)
-
-### User Model (Implemented)
-
-Purpose:
-
-* Authentication
-* Authorization
-* Ownership reference for URLs
-
-A separate `ShortUrl` model will be introduced later to handle business logic.
-
----
-
-## 🚀 Development Philosophy
-
-* **Design before code**
-* **Minimal but extensible schemas**
-* **Security by default**
-* **V1 stability > feature overload**
-
----
-
-## 📍 Next Milestones
-
-1. Signup & Login route implementation
-2. Auth middleware (JWT verification)
-3. Short URL schema & redirect flow
-4. Error handling & validation standardization
-
----
-
-> This README describes *what the project does* and *how the flow works*.
-> For **deep explanations, interview notes, and design reasoning**, see `NOTES.md`.
