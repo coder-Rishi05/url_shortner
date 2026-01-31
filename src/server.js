@@ -8,6 +8,14 @@ import { PORT } from "./utils/env.js";
 import dotenv from "dotenv";
 dotenv.config();
 
+// // for getting client ip
+// app.get("/ip", (req, res) => {
+//   const clientIp =
+//     req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+//   res.send(clientIp);
+//   console.log(clientIp);
+// });
+
 const startServer = async (req, res) => {
   try {
     await connectDb();
