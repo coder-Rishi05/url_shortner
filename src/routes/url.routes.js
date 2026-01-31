@@ -5,12 +5,12 @@ import {
   // redirectUrl,
   // deactivateUrl,
 } from "../controllers/url.controller.js";
-// import authMiddleware from "../middlewares/auth.middleware.js";
+import { protect } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 // create short url (protected)
-router.post("/", createUrl);
+router.post("/", protect, createUrl);
 
 // // get logged-in user's urls (protected)
 // router.get("/", getUserUrls);
