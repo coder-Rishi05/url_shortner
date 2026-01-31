@@ -19,6 +19,7 @@ export const signUp = async (req, res) => {
         message: "User already exists with this email",
       });
     }
+    
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
