@@ -91,5 +91,44 @@ export const getUserUrls = async (req, res) => {
       message: "Failed to fetch user URLs",
     });
   }
+};
 
+export const deactivateUrl = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 2️⃣ Find URL
+    const url = await URL.findById(id);
+
+    if (!url) {
+      return res.status(404).json({
+        success: false,
+        message: "URL not found",
+      });
+    }
+
+    // 3️⃣ Ownership check
+    if (url.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to modify this URL",
+      });
+    }
+    // 4️⃣ Deactivate URL
+    url.isActive = false;
+    await url.save();
+
+    // 5️⃣ Response
+    return res.status(200).json({
+      success: true,
+      message: "URL deactivated successfully",
+    });
+  } catch (error) {
+    console.error("Deactivate URL Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to deactivate URL",
+    });
+  }
 };
