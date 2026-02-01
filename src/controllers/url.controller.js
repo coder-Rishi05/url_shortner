@@ -62,3 +62,34 @@ export const redirectUrl = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getUserUrls = async (req, res) => {
+  try {
+    // get user id
+    const userId = req.user.id;
+    console.log(userId);
+
+    // 2️⃣ Fetch URLs created by this user
+
+    const urls = await URL.find({
+      createdBy: userId,
+      isActive: true,
+    }).sort({ createdAt: -1 });
+
+    // 3️⃣ Response
+
+    return res.status(200).json({
+      success: true,
+      count: urls.length,
+      data: urls,
+    });
+  } catch (error) {
+    console.error("Get User URLs Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch user URLs",
+    });
+  }
+
+};

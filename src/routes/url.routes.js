@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
   createUrl,
-  // getUserUrls,
+  getUserUrls,
   redirectUrl,
-  // deactivateUrl,
+  deactivateUrl,
 } from "../controllers/url.controller.js";
 import { protect } from "../middlewares/auth.middleware.js";
 
@@ -13,12 +13,13 @@ const router = Router();
 router.post("/", protect, createUrl);
 
 // get logged-in user's urls (protected)
-// router.get("/", getUserUrls);
+router.get("/", protect, getUserUrls);
 
 // redirect short url (public)
 router.get("/:shortCode", redirectUrl);
 
-// // deactivate url (protected)
-// router.patch("/:id", deactivateUrl);
+// deactivate url (protected)
+
+router.patch("/:id", protect, deactivateUrl);
 
 export default router;
