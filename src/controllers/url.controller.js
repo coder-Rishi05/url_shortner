@@ -8,7 +8,9 @@ export const createUrl = async (req, res) => {
     // 1. validate input
     if (!originalUrl || !validator.isURL(originalUrl)) {
       return res.status(400).json({ message: "Invalid URL" });
+
     }
+    
 
     // 2. generate short code (placeholder logic)
     const shortCode = Math.random().toString(36).substring(2, 8);
