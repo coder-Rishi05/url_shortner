@@ -30,3 +30,35 @@ export const createUrl = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const redirectUrl = async (req, res) => {
+  try {
+    const { shortCode } = req.params;
+    // const {originalUrl,clickCount } = URL;
+
+    const url = await URL.findOne({ shortCode });
+
+    if (!url) {
+      return res.status(404).json({ message: "Url does not exist" });
+    }
+
+    if (!url.isActive) {
+      return res.status(403).json({ message: "The url is not active" });
+    }
+
+    if (url.expiresAt && url.expiresAt < new Date()) {
+      return res.status(410).json({ message: "The url is expired" });
+    }
+
+    url.clickCount += 1;
+
+    await url.save();
+
+    res.redirect(url.originalUrl);
+
+    console.log(shortCode);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
