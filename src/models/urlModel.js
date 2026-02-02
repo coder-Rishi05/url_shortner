@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { JWT_SECRET } from "../utils/env.js";
-import jwt from "jsonwebtoken";
 
 const urlSchema = new mongoose.Schema(
   {
@@ -42,14 +40,6 @@ const urlSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
-
-urlSchema.methods.getJWT = async function () {
-  user = this;
-  const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
-    expiresIn: "1d",
-  });
-  return token;
-};
 
 const URL = mongoose.model("URL", urlSchema);
 
