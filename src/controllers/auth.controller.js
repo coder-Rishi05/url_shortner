@@ -1,12 +1,9 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-
 import {
   validationSignUpData,
   validationLoginData,
 } from "../utils/validator.js";
-import { JWT_SECRET } from "../utils/env.js";
 
 export const signUp = async (req, res) => {
   try {
@@ -19,7 +16,6 @@ export const signUp = async (req, res) => {
         message: "User already exists with this email",
       });
     }
-    
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -65,9 +61,7 @@ export const login = async (req, res) => {
 
     // assign jwt
 
-    const token = jwt.sign({ id: exist._id, role: exist.role }, JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = await exist.getJWT();
 
     res.cookie("token", token, {
       httpOnly: true,
