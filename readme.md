@@ -84,3 +84,12 @@ Business Logic (URL logic – upcoming)
 JWT is **stateless**, so no tokens are stored in the database.
 
 ---
+
+### rate limiting and helmet
+
+it help to protect from brute force attack.
+
+serevr crash hone se bchata hai
+
+setting limit on user request
+   1 minutes / 15 request
