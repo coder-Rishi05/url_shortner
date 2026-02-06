@@ -2,10 +2,6 @@ import URL from "../models/urlModel.js";
 import validator from "validator";
 import { validateCustomAlias } from "../utils/validator.js";
 
-import validator from "validator";
-import URL from "../models/urlModel.js";
-import { validateCustomAlias } from "../utils/validateAlias.js";
-
 export const createUrl = async (req, res) => {
   try {
     const { originalUrl, customAlias } = req.body;
@@ -38,12 +34,15 @@ export const createUrl = async (req, res) => {
       // 4️⃣ Generate random short code
       shortCode = Math.random().toString(36).substring(2, 8);
     }
+    // url expire
+    const expiryDate = new Date();
 
     // 5️⃣ Create URL document
     const url = await URL.create({
       originalUrl,
       shortCode,
       createdBy: req.user.id,
+      expiresAt: expiryDate.setDate(expiryDate.getDate() + 1),
     });
 
     // 6️⃣ Response
@@ -77,7 +76,7 @@ export const redirectUrl = async (req, res) => {
     }
 
     url.clickCount += 1;
-
+    url.lastClickedAt = new Date();
     await url.save();
 
     res.redirect(url.originalUrl);
