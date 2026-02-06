@@ -19,7 +19,6 @@ export const signUp = async (req, res) => {
         message: "User already exists with this email",
       });
     }
-    
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -49,15 +48,15 @@ export const login = async (req, res) => {
     validationLoginData(req);
     const { email, password } = req.body;
 
-    const exist = await User.findOne({ email }).select("+password");
+    const existUser = await User.findOne({ email }).select("+password");
 
-    if (!exist) {
+    if (!existUser) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // comparing password
 
-    const validUser = await bcrypt.compare(password, exist.password);
+    const validUser = await bcrypt.compare(password, existUser.password);
 
     if (!validUser) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -65,9 +64,13 @@ export const login = async (req, res) => {
 
     // assign jwt
 
-    const token = jwt.sign({ id: exist._id, role: exist.role }, JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { id: existUser._id, role: existUser.role },
+      JWT_SECRET,
+      {
+        expiresIn: "1d",
+      },
+    );
 
     res.cookie("token", token, {
       httpOnly: true,

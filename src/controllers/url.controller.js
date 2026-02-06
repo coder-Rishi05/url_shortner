@@ -19,7 +19,7 @@ export const createUrl = async (req, res) => {
     const url = await URL.create({
       originalUrl,
       shortCode,
-      createdBy: req.user.id,
+      createdBy: req.user.id, // ye id mughe token se mil rhi hai
     });
 
     // 4. response
@@ -67,7 +67,7 @@ export const redirectUrl = async (req, res) => {
 
 export const getUserUrls = async (req, res) => {
   try {
-    // get user id
+    // get user id ye user mera token se aa rha hai req.user.id = jwt.id
     const userId = req.user.id;
     console.log(userId);
 

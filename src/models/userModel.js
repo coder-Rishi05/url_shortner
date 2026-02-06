@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import validator from "validator"
+import validator from "validator";
 
 const userSchema = new Schema(
   {
@@ -34,6 +34,7 @@ const userSchema = new Schema(
       type: String,
       enum: ["user", "admin"],
       default: "user",
+      message: `{VALUE} is not valid option`,
     },
 
     isActive: {

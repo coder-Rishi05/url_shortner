@@ -41,3 +41,30 @@ export const protect = (req, res, next) => {
 
 };
 
+
+// export const auth = async(req,res)=>{
+//   // hears authorization se mughe token milega
+//   const authHeaders = req.headers.authorization
+//   // check if authheaders present or not
+//   if(!authHeaders || authHeaders.startsWith("Bearer ")){
+//     return res.status(402).json({message:"unauthorised access ! Entry blocked"})
+//   }
+
+//   // agr auth hai to extract bhi kro
+//   const jwtToken = authHeaders.split(" ")[1];
+//   console.log(jwtToken);
+
+//   // now verify the correct or not
+
+//   const decoded = jwt.verify(jwtToken,JWT_SECRET)
+//   console.log(decoded)
+
+//   // if decoded now add data to the jwt token
+
+//     req.user = {
+//       id:decoded._id,
+//       role:decoded.role
+//     }
+
+
+// }
