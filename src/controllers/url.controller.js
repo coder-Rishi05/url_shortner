@@ -1,28 +1,52 @@
 import URL from "../models/urlModel.js";
 import validator from "validator";
+import { validateCustomAlias } from "../utils/validator.js";
+
+import validator from "validator";
+import URL from "../models/urlModel.js";
+import { validateCustomAlias } from "../utils/validateAlias.js";
 
 export const createUrl = async (req, res) => {
   try {
-    const { originalUrl } = req.body;
+    const { originalUrl, customAlias } = req.body;
 
-    // 1. validate input
+    // 1️⃣ Validate original URL
     if (!originalUrl || !validator.isURL(originalUrl)) {
       return res.status(400).json({ message: "Invalid URL" });
-
     }
-    
 
-    // 2. generate short code (placeholder logic)
-    const shortCode = Math.random().toString(36).substring(2, 8);
+    let shortCode;
 
-    // 3. create url document
+    // 2️⃣ If custom alias provided
+    if (customAlias) {
+      const { isValid, alias, message } = validateCustomAlias(customAlias);
+
+      if (!isValid) {
+        return res.status(400).json({ message });
+      }
+
+      // 3️⃣ Check uniqueness
+      const existingUrl = await URL.findOne({ shortCode: alias });
+      if (existingUrl) {
+        return res.status(409).json({
+          message: "Custom alias already exists",
+        });
+      }
+
+      shortCode = alias;
+    } else {
+      // 4️⃣ Generate random short code
+      shortCode = Math.random().toString(36).substring(2, 8);
+    }
+
+    // 5️⃣ Create URL document
     const url = await URL.create({
       originalUrl,
       shortCode,
-      createdBy: req.user.id, // ye id mughe token se mil rhi hai
+      createdBy: req.user.id,
     });
 
-    // 4. response
+    // 6️⃣ Response
     return res.status(201).json({
       message: "URL created successfully",
       shortUrl: `${req.protocol}://${req.get("host")}/${shortCode}`,

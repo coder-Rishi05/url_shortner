@@ -38,3 +38,33 @@ export const validationLoginData = (req) => {
     throw new Error("Password is required");
   }
 };
+
+
+export const validateCustomAlias = (customAlias) => {
+  // trim + lowercase
+  const alias = validator.trim(customAlias).toLowerCase();
+
+  // empty check
+  if (validator.isEmpty(alias)) {
+    return {
+      isValid: false,
+      message: "Custom alias cannot be empty",
+    };
+  }
+
+  // regex: only a-z, 0-9, hyphen | length 3–30
+  const aliasRegex = /^[a-z0-9-]{3,30}$/;
+
+  if (!aliasRegex.test(alias)) {
+    return {
+      isValid: false,
+      message:
+        "Alias must be 3-30 characters long and contain only letters, numbers, and hyphens",
+    };
+  }
+
+  return {
+    isValid: true,
+    alias,
+  };  
+};
