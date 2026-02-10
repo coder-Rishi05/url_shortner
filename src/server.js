@@ -11,6 +11,7 @@ dotenv.config();
 
 const startServer = async (req, res) => {
   try {
+    // run after connections
     await connectDb();
 
     app.on("error", (err) => {
