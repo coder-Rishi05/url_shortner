@@ -41,6 +41,16 @@ const userSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    credits:{
+      total:{
+        type:Number,
+        default:20,
+      },
+      used:{
+        type:Number,
+        default:0,
+      }
+    }
   },
   { timestamps: true },
 );

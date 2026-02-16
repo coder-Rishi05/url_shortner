@@ -1,14 +1,34 @@
 import URL from "../models/urlModel.js";
 import validator from "validator";
 import { validateCustomAlias } from "../utils/validator.js";
+import User from "../models/userModel.js";
 
 export const createUrl = async (req, res) => {
   try {
     const { originalUrl, customAlias } = req.body;
+    const userId = req.user.id;
 
     // 1️⃣ Validate original URL
     if (!originalUrl || !validator.isURL(originalUrl)) {
       return res.status(400).json({ message: "Invalid URL" });
+    }
+    // 2️⃣ Atomically increment credit ONLY if used < total
+    const updatedUser = await User.findOneAndUpdate(
+      {
+        _id: userId,
+        $expr: { $lt: ["$credits.used", "$credits.total"] },
+      },
+      {
+        $inc: { "credits.used": 1 },
+      },
+      { new: true },
+    );
+
+    // If no document returned → credit limit exceeded
+    if (!updatedUser) {
+      return res.status(403).json({
+        message: "Credit limit exceeded",
+      });
     }
 
     let shortCode;
@@ -36,19 +56,24 @@ export const createUrl = async (req, res) => {
     }
     // url expire
     const expiryDate = new Date();
-
+    expiryDate.setDate(expiryDate.getDate() + 1);
     // 5️⃣ Create URL document
     const url = await URL.create({
       originalUrl,
       shortCode,
-      createdBy: req.user.id,
-      expiresAt: expiryDate.setDate(expiryDate.getDate() + 1),
+      createdBy: userId,
+      expiresAt: expiryDate,
     });
+
+    // 6️⃣ Calculate remaining credits
+    const remainingCredits =
+      updatedUser.credits.total - updatedUser.credits.used;
 
     // 6️⃣ Response
     return res.status(201).json({
       message: "URL created successfully",
       shortUrl: `${req.protocol}://${req.get("host")}/${shortCode}`,
+      remainingCredits,
     });
   } catch (error) {
     console.error(error);
@@ -58,6 +83,7 @@ export const createUrl = async (req, res) => {
 
 export const redirectUrl = async (req, res) => {
   try {
+    // take url from the user.
     const { shortCode } = req.params;
     // const {originalUrl,clickCount } = URL;
 
