@@ -35,8 +35,8 @@ const paymentSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["success", "failed"],
-      default: "failed", // safe default until webhook confirms success
+      enum: ["pending", "success", "failed"],
+      default: "pending",
     },
   },
   { timestamps: true },

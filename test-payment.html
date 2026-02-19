@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <button id="pay-btn">Pay ₹5</button>
+
+  <script>
+    document.getElementById("pay-btn").onclick = function () {
+      var options = {
+        key: "rzp_test_SHy2jSMkbUCnyM",
+        amount: 500,
+        currency: "INR",
+        name: "URL Shortener",
+        description: "Buy 20 Credits",
+        order_id: "order_SHzRRH0GJySEH4",
+        handler: function (response) {
+          alert("Payment Successful!");
+          console.log(response);
+        }
+      };
+
+      var rzp = new Razorpay(options);
+      rzp.open();
+    };
+  </script>
+</body>
+</html>

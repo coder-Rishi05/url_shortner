@@ -4,7 +4,7 @@ import { CREDIT_PRICE, CREDIT_AMOUNT } from "../configs/payment.config.js";
 
 export const createOrder = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.user.id;
 
     // Create Razorpay order
     const order = await razorpay.orders.create({
