@@ -1,6 +1,6 @@
 import crypto from "crypto";
-import Payment from "../models/payment.model.js";
-import User from "../models/user.model.js";
+import Payment from "../models/paymentModel.js";
+import User from "../models/userModel.js";
 import { CREDIT_AMOUNT } from "../configs/payment.config.js";
 
 export const razorpayWebhook = async (req, res) => {

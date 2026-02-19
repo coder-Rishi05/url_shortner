@@ -5,6 +5,7 @@ export const {
   MONGO_DB_ATLAS,
   TEST_KEY_SECRET,
   TEST_API_KEY,
+  RAZORPAY_WEBHOOK_SECRET,
 } = process.env;
 
 if (!MONGO_DB_COMPASS || !MONGO_DB_ATLAS) {
