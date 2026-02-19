@@ -6,7 +6,6 @@ import cors from "cors";
 
 export const app = express();
 
-// app.options("*", cors());
 
 app.use(
   cors({
