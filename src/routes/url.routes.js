@@ -25,7 +25,7 @@ router.post("/", protect, limiter, createUrl);
 router.get("/", protect, getUserUrls);
 
 // redirect short url (public)
-router.get("/:shortCode",limiter, redirectUrl);
+// removed router.get("/:shortCode",limiter, redirectUrl);
 
 // deactivate url (protected)
 

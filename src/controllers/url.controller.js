@@ -72,7 +72,8 @@ export const createUrl = async (req, res) => {
     // 6️⃣ Response
     return res.status(201).json({
       message: "URL created successfully",
-      shortUrl: `${req.protocol}://${req.get("host")}/api/urls/${shortCode}`,
+      // shortUrl: `${req.protocol}://${req.get("host")}/${shortCode}`,
+      shortCode,
       remainingCredits,
     });
   } catch (error) {

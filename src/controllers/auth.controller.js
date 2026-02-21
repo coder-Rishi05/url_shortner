@@ -77,7 +77,6 @@ export const login = async (req, res) => {
       // secure: true, // prod
       sameSite: "strict",
     });
-    
 
     res.status(200).json({ messgae: "user login sucessfully", token: token });
   } catch (error) {
@@ -100,6 +99,7 @@ export const logout = async (req, res) => {
 
 export const getCurrentUser = async (req, res) => {
   try {
+
     const user = req.user;
 
     if (!user) {

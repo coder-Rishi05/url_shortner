@@ -6,6 +6,7 @@ import cors from "cors";
 import paymentRoutes from "./src/routes/payment.routes.js";
 import webhookRoutes from "./src/routes/webhook.routes.js";
 import cookieParser from "cookie-parser";
+import { redirectUrl } from "./src/controllers/url.controller.js";
 
 export const app = express();
 
@@ -25,7 +26,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 
 app.use("/api/urls", urlRouter);
-
+app.get("/:shortCode", redirectUrl);
 app.use("/api/admin", adminRouter);
 
 app.use("/api/payments", paymentRoutes);
