@@ -5,6 +5,7 @@ import adminRouter from "./src/routes/admin.routes.js";
 import cors from "cors";
 import paymentRoutes from "./src/routes/payment.routes.js";
 import webhookRoutes from "./src/routes/webhook.routes.js";
+import cookieParser from "cookie-parser";
 
 export const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/webhooks", webhookRoutes);
 
 app.use(express.json());
 
+app.use(cookieParser());
 app.use("/api/auth", authRouter);
 
 app.use("/api/urls", urlRouter);

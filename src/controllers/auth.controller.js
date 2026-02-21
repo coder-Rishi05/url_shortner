@@ -77,6 +77,7 @@ export const login = async (req, res) => {
       // secure: true, // prod
       sameSite: "strict",
     });
+    
 
     res.status(200).json({ messgae: "user login sucessfully", token: token });
   } catch (error) {
