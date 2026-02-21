@@ -8,6 +8,6 @@ export const {
   RAZORPAY_WEBHOOK_SECRET,
 } = process.env;
 
-if (!MONGO_DB_COMPASS || !MONGO_DB_ATLAS) {
+if (!MONGO_DB_ATLAS) {
   throw new Error("MONGO_DB_COMPASS is missing in env");
 }
