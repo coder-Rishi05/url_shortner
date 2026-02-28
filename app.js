@@ -7,8 +7,24 @@ import paymentRoutes from "./src/routes/payment.routes.js";
 import webhookRoutes from "./src/routes/webhook.routes.js";
 import cookieParser from "cookie-parser";
 import { redirectUrl } from "./src/controllers/url.controller.js";
+import passport from "passport";
+import session from "express-session";
 
 export const app = express();
+
+// session setup
+
+app.use(session({
+  secret:"mysecret",
+  resave:false,
+  saveUninitialized:true
+}))
+
+// starting passport
+
+app.use(passport.initialize())
+// creating session for passport
+app.use(passport.session())
 
 app.use(
   cors({
