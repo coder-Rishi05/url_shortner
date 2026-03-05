@@ -7,6 +7,7 @@ import {
   updateUserStatus,
   updateUserRole,
   getAdminStats,
+  updateUserCredits,
 } from "../controllers/admin.controller.js";
 
 const adminRouter = express.Router();
@@ -18,8 +19,21 @@ adminRouter.use(protect, isAdmin);
 adminRouter.get("/users", getAllUsers);
 adminRouter.patch("/users/:id/status", updateUserStatus);
 adminRouter.patch("/users/:id/role", updateUserRole);
+adminRouter.patch("/users/:id/credits",updateUserCredits);
 
 // Stats
 adminRouter.get("/stats", getAdminStats);
+
+
+// // urls
+// adminRouter.get("/urls",getAllUrls)
+// adminRouter.delete("/urls/:id",deleteUrls);
+
+
+// // credit Requests
+
+// adminRouter.get("/credit-requests");
+// adminRouter.patch("/credit-requests/:id/approve")
+
 
 export default adminRouter;

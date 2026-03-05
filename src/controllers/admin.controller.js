@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import { validateCredits } from "../utils/validator.js";
 
 /**
  * GET all users
@@ -116,6 +117,41 @@ export const getAdminStats = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+export const updateUserCredits = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { credits } = req.body;
+    validateCredits(req);
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    user.credits += credits;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: `credits credits added successfully`,
+      data: {
+        userId: user._id,
+        newCreditBalance: user.credits, // Frontend ko updated balance batao
+      },
+    });
+  } catch (err) {
     console.log(error);
     return res.status(500).json({
       success: false,
