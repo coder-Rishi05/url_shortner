@@ -4,6 +4,7 @@ import {
   getUserUrls,
   redirectUrl,
   deactivateUrl,
+  requestCredits,
 } from "../controllers/url.controller.js";
 import { protect } from "../middlewares/auth.middleware.js";
 
@@ -30,5 +31,7 @@ router.get("/", protect, getUserUrls);
 // deactivate url (protected)
 
 router.patch("/:id", protect, deactivateUrl);
+
+router.post("/credits/request",protect,requestCredits)
 
 export default router;

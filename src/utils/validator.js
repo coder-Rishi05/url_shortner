@@ -39,14 +39,11 @@ export const validationLoginData = (req) => {
   }
 };
 
-export const validateCredits = (req) => {
-  const { credits } = req.body;
+export const validateCredits = (credits) => {
   if (credits === undefined || typeof credits !== "number" || credits <= 0) {
-    return res.status(400).json({
-      success: false,
-      message: "Valid credit amount required",
-    });
+    return { isValid: false, message: "Valid credit amount required" };
   }
+  return { isValid: true };
 };
 
 export const validateCustomAlias = (customAlias) => {

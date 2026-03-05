@@ -129,8 +129,12 @@ export const updateUserCredits = async (req, res) => {
   try {
     const { id } = req.params;
     const { credits } = req.body;
-    validateCredits(req);
+    validateCredits(credits);
 
+    const { isValid, message } = validateCredits(credits);
+    if (!isValid) {
+      return res.status(400).json({ success: false, message });
+    }
     const user = await User.findById(id);
 
     if (!user) {

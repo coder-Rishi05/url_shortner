@@ -1,7 +1,8 @@
 import URL from "../models/urlModel.js";
 import validator from "validator";
-import { validateCustomAlias } from "../utils/validator.js";
+import { validateCredits, validateCustomAlias } from "../utils/validator.js";
 import User from "../models/userModel.js";
+import CreditRequest from "../models/creditRequestModel.js";
 
 export const createUrl = async (req, res) => {
   try {
@@ -182,5 +183,42 @@ export const deactivateUrl = async (req, res) => {
       success: false,
       message: "Failed to deactivate URL",
     });
+  }
+};
+
+export const requestCredits = async (req, res) => {
+  try {
+    const { credits } = req.body;
+    const { id } = req.user;
+    validateCredits(credits);
+
+    const { isValid, message } = validateCredits(credits);
+    if (!isValid) {
+      return res.status(400).json({ success: false, message });
+    }
+
+    const existingRequest = await CreditRequest.findOne({
+      user: id,
+      reqStatus: "pending",
+    });
+
+    if (existingRequest) {
+      return res.status(400).json({
+        success: false,
+        message: "Request already pending",
+      });
+    }
+
+    await CreditRequest.create({
+      user: id,
+      creditRequested: credits,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Credit request submitted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "server error" });
   }
 };
