@@ -190,8 +190,7 @@ export const requestCredits = async (req, res) => {
   try {
     const { credits } = req.body;
     const { id } = req.user;
-    validateCredits(credits);
-
+   
     const { isValid, message } = validateCredits(credits);
     if (!isValid) {
       return res.status(400).json({ success: false, message });

@@ -1,3 +1,4 @@
+import URL from "../models/urlModel.js";
 import User from "../models/userModel.js";
 import { validateCredits } from "../utils/validator.js";
 
@@ -125,11 +126,52 @@ export const getAdminStats = async (req, res) => {
   }
 };
 
+// get all urls
+
+export const getAllUrls = async (req, res) => {
+  try {
+    const urls = await URL.find();
+    if (!urls) {
+      return res.status(404).json({ message: "No urls created yet" });
+    }
+
+    return res.status(200).json({ message: "fetched all urls", urls: urls });
+  } catch (error) {
+    console.log(error);
+    return res.staus(500).json({ message: "Server error" });
+  }
+};
+
+export const deleteUrls = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const url = await URL.findById(id);
+    if (!url) {
+      return res.status(404).json({ message: "URL not found" });
+    }
+
+    // Sirf deactivated URLs hi delete ho sakti hain
+    if (url.isActive) {
+      return res.status(403).json({ message: "Active URL cannot be deleted" });
+    }
+
+    const deletedUrl = await URL.findByIdAndDelete(id);
+
+    return res.status(200).json({
+      message: "URL deleted successfully",
+      deletedUrl,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 export const updateUserCredits = async (req, res) => {
   try {
     const { id } = req.params;
     const { credits } = req.body;
-    validateCredits(credits);
 
     const { isValid, message } = validateCredits(credits);
     if (!isValid) {
@@ -144,7 +186,7 @@ export const updateUserCredits = async (req, res) => {
       });
     }
 
-    user.credits += credits;
+    user.credits.total += credits;
     await user.save();
 
     return res.status(200).json({
@@ -152,10 +194,10 @@ export const updateUserCredits = async (req, res) => {
       message: `credits credits added successfully`,
       data: {
         userId: user._id,
-        newCreditBalance: user.credits, // Frontend ko updated balance batao
+        newCreditBalance: user.credits.total, // Frontend ko updated balance batao
       },
     });
-  } catch (err) {
+  } catch (error) {
     console.log(error);
     return res.status(500).json({
       success: false,
@@ -163,3 +205,5 @@ export const updateUserCredits = async (req, res) => {
     });
   }
 };
+
+export const getCreditRequest = async (req, res) => {};
