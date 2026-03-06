@@ -9,11 +9,13 @@ import cookieParser from "cookie-parser";
 import { redirectUrl } from "./src/controllers/url.controller.js";
 import passport from "passport";
 import session from "express-session";
+import helmet from "helmet";
 
 export const app = express();
 
 // session setup
 
+app.use(helmet());
 app.use(session({
   secret:"mysecret",
   resave:false,

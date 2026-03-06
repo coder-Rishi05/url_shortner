@@ -11,6 +11,7 @@ import {
   getCreditRequest,
   getAllUrls,
   deleteUrls,
+  approveCredit
 } from "../controllers/admin.controller.js";
 
 const adminRouter = express.Router();
@@ -34,6 +35,6 @@ adminRouter.delete("/urls/:id", deleteUrls);
 // credit Requests
 
 adminRouter.get("/credit-requests", getCreditRequest);
-// adminRouter.patch("/credit-requests/:id/approve")
+adminRouter.patch("/credit-requests/:id/approve",approveCredit)
 
 export default adminRouter;

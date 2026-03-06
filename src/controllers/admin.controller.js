@@ -1,3 +1,4 @@
+import CreditRequest from "../models/creditRequestModel.js";
 import URL from "../models/urlModel.js";
 import User from "../models/userModel.js";
 import { validateCredits } from "../utils/validator.js";
@@ -206,4 +207,51 @@ export const updateUserCredits = async (req, res) => {
   }
 };
 
-export const getCreditRequest = async (req, res) => {};
+export const getCreditRequest = async (req, res) => {
+  try {
+    const requests = await CreditRequest.find().populate("user", "name email");
+
+    if (requests.length === 0) {
+      return res
+        .status(404)
+        .json({ success: true, message: "No credit request found" });
+    }
+
+    return res.status(200).json({
+      message: "Fecthed creadit requestes",
+      requests: requests,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Server error", error: error });
+  }
+};
+
+export const approveCredit = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const request = await CreditRequest.findById(id);
+
+    if (!request) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (request.reqStatus === "approved") {
+      return res.status(401).json({ message: "Already token increased" });
+    }
+
+    // check requets user
+    const user = await User.findById(request.user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.credits.total += request.creditRequested;
+    request.reqStatus = "approved";
+    await request.save();
+    await user.save();
+
+    return res.status(200).json({ message: "Creadit increased succesfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Server error", error: error });
+  }
+};

@@ -5,7 +5,7 @@ const creditRequestSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-       required:true
+      required: true,
     },
     reqStatus: {
       type: String,
@@ -14,8 +14,8 @@ const creditRequestSchema = mongoose.Schema(
     },
     creditRequested: {
       type: Number,
-      default:10,
-      required:true
+      default: 10,
+      required: true,
     },
   },
   { timestamps: true },
