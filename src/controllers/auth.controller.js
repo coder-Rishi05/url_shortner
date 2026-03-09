@@ -72,12 +72,11 @@ export const login = async (req, res) => {
       },
     );
 
-    res.cookie("token", token, {
+    jsres.cookie("token", token, {
       httpOnly: true,
-      // secure: true, // prod
-      sameSite: "strict",
+      secure: true, // ✅ uncomment karo — HTTPS pe zaroori hai
+      sameSite: "none",
     });
-
     res.status(200).json({ messgae: "user login sucessfully", token: token });
   } catch (error) {
     console.log("server error", error);
@@ -99,7 +98,6 @@ export const logout = async (req, res) => {
 
 export const getCurrentUser = async (req, res) => {
   try {
-
     const user = req.user;
 
     if (!user) {
