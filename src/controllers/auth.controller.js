@@ -77,7 +77,7 @@ export const login = async (req, res) => {
       secure: true, // ✅ uncomment karo — HTTPS pe zaroori hai
       sameSite: "none",
     });
-    res.status(200).json({ messgae: "user login sucessfully", token: token });
+    res.status(200).json({ message: "user login sucessfully", token: token });
   } catch (error) {
     console.log("server error", error);
     res.status(500).json({ message: "server error", error });

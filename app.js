@@ -15,8 +15,8 @@ export const app = express();
 const corsOptions = {
   origin: "https://url-frontend-fhzz.onrender.com",
   credentials: true,
-  // methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  // allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(session({
@@ -28,7 +28,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.options("/{*path}", cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 
 app.use("/api/webhooks", webhookRoutes);
