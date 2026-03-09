@@ -15,8 +15,8 @@ export const app = express();
 const corsOptions = {
   origin: "https://url-frontend-fhzz.onrender.com",
   credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  // methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  // allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(session({
