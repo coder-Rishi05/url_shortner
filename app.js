@@ -15,7 +15,7 @@ export const app = express();
 
 // session setup
 
-app.use(helmet());
+
 app.use(
   session({
     secret: "mysecret",
@@ -38,6 +38,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+app.use(helmet());
 app.use("/api/webhooks", webhookRoutes);
 
 app.use(express.json());
