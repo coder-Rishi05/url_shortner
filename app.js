@@ -12,12 +12,12 @@ import { redirectUrl } from "./src/controllers/url.controller.js";
 
 export const app = express();
 
-const corsOptions = {
-  origin: "https://url-frontend-fhzz.onrender.com",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+// const corsOptions = {
+//   origin: "https://url-frontend-fhzz.onrender.com",
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+// };
 
 // app.use(session({
 //   secret: "mysecret",
@@ -28,7 +28,26 @@ const corsOptions = {
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-app.use(cors(corsOptions));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://url-frontend-fhzz.onrender.com",
+];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
+// app.use(cors(corsOptions));
 
 // app.use("/api/webhooks", webhookRoutes);
 app.use(express.json());
