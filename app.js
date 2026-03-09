@@ -37,14 +37,14 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
-app.use(
-  helmet({
-    crossOriginResourcePolicy: false,
-    crossOriginOpenerPolicy: false,
-    crossOriginEmbedderPolicy: false,
-    contentSecurityPolicy: false,
-  }),
-);
+// app.use(
+//   helmet({
+//     crossOriginResourcePolicy: false,
+//     crossOriginOpenerPolicy: false,
+//     crossOriginEmbedderPolicy: false,
+//     contentSecurityPolicy: false,
+//   }),
+// );
 app.use("/api/webhooks", webhookRoutes);
 
 app.use(express.json());
