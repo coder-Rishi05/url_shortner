@@ -7,8 +7,8 @@ import cors from "cors";
 // import webhookRoutes from "./src/routes/webhook.routes.js";
 import cookieParser from "cookie-parser";
 import { redirectUrl } from "./src/controllers/url.controller.js";
-import passport from "passport";
-import session from "express-session";
+// import passport from "passport";
+// import session from "express-session";
 
 export const app = express();
 
@@ -19,14 +19,14 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.use(session({
-  secret: "mysecret",
-  resave: false,
-  saveUninitialized: true,
-}));
+// app.use(session({
+//   secret: "mysecret",
+//   resave: false,
+//   saveUninitialized: true,
+// }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(cors(corsOptions));
 
