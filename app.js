@@ -15,7 +15,6 @@ export const app = express();
 
 // session setup
 
-
 app.use(
   session({
     secret: "mysecret",
@@ -38,7 +37,14 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: false,
+  }),
+);
 app.use("/api/webhooks", webhookRoutes);
 
 app.use(express.json());
