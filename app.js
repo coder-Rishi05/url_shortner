@@ -31,7 +31,7 @@ app.use(passport.session());
 app.options("/{*path}", cors());
 app.use(
   cors({
-    origin: "https://url-frontend-kappa.vercel.app",
+    origin: "https://url-frontend-fhzz.onrender.com",
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
