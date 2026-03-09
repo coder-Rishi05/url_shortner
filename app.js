@@ -28,7 +28,7 @@ app.use(
 app.use(passport.initialize());
 // creating session for passport
 app.use(passport.session());
-
+app.options("*", cors());
 app.use(
   cors({
     origin: "https://url-frontend-kappa.vercel.app",
