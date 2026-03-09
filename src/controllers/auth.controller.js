@@ -72,7 +72,7 @@ export const login = async (req, res) => {
       },
     );
 
-    jsres.cookie("token", token, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true, // ✅ uncomment karo — HTTPS pe zaroori hai
       sameSite: "none",
