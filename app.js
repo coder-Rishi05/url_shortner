@@ -16,21 +16,23 @@ export const app = express();
 // session setup
 
 app.use(helmet());
-app.use(session({
-  secret:"mysecret",
-  resave:false,
-  saveUninitialized:true
-}))
+app.use(
+  session({
+    secret: "mysecret",
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
 
 // starting passport
 
-app.use(passport.initialize())
+app.use(passport.initialize());
 // creating session for passport
-app.use(passport.session())
+app.use(passport.session());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://url-frontend-kappa.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
