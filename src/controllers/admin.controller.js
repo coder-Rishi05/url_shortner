@@ -209,13 +209,16 @@ export const updateUserCredits = async (req, res) => {
 
 export const getCreditRequest = async (req, res) => {
   try {
-    const requests = await CreditRequest.find().populate("user", "name email");
+    const requests = await CreditRequest.find().populate(
+      "user",
+      "firstname email",
+    );
 
     if (requests.length === 0) {
       return res
         .status(404)
         .json({ success: true, message: "No credit request found" });
-    }
+    }     
 
     return res.status(200).json({
       message: "Fecthed creadit requestes",
