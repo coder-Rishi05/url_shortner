@@ -89,7 +89,24 @@ JWT is **stateless**, so no tokens are stored in the database.
 
 it help to protect from brute force attack.
 
-serevr crash hone se bchata hai
-
 setting limit on user request
    1 minutes / 15 request
+
+### Features
+
+- User registration and login with JWT stored in httpOnly cookies
+- Credit-based system — each user gets a set number of credits to create short URLs
+- Short URL generation with redirect support
+- Deactivate URLs without deleting them
+- Admin role with full control over users and credit requests
+- Credit request and approval flow — users can request more credits, admins approve or reject
+- Protected routes using middleware (authentication + role check)
+
+### Tech Stack
+
+- Runtime: Node.js
+- Framework: Express.js
+- Database: MongoDB with Mongoose
+- Auth: JSON Web Tokens (JWT) via httpOnly cookies
+- Deployment: Render
+
