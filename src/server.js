@@ -1,17 +1,11 @@
 import "dotenv/config";
-
 import { app } from "../app.js";
 import { const_PORT } from "./utils/constant.js";
 import connectDb from "./db/db.js";
 import { PORT } from "./utils/env.js";
 
-import dotenv from "dotenv";
-dotenv.config();
-
-
 const startServer = async (req, res) => {
   try {
-    // run after connections
     await connectDb();
 
     app.on("error", (err) => {
