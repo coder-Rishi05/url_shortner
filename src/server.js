@@ -6,6 +6,7 @@ import { PORT } from "./utils/env.js";
 
 const startServer = async (req, res) => {
   try {
+    
     await connectDb();
 
     app.on("error", (err) => {
