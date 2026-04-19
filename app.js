@@ -56,5 +56,5 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/urls", urlRouter);
 app.get("/:shortCode", redirectUrl);
-app.use("/api/admin", adminRouter);
+app.use("/api/admin", adminRouter); 
 // app.use("/api/payments", paymentRoutes);

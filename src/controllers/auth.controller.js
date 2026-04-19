@@ -12,14 +12,14 @@ export const signUp = async (req, res) => {
   try {
     validationSignUpData(req);
     const { firstname, email, password } = req.body;
-
+    // user exist
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({
         message: "User already exists with this email",
       });
     }
-
+    // password hassing
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
@@ -37,7 +37,7 @@ export const signUp = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    res
+   return res
       .status(500)
       .json({ message: "Internal server error", error: error.message });
   }
@@ -76,6 +76,7 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: true, // ✅ uncomment karo — HTTPS pe zaroori hai
       sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000, // expire in 24 hours
     });
     res.status(200).json({ message: "user login sucessfully", token: token });
   } catch (error) {
